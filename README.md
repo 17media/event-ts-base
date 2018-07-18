@@ -1,6 +1,6 @@
-<p align="center">
-  TypeScript Infrastructure
-</p>
+<h1 align="center">
+  TS Base | TypeScript Infrastructure
+</h1>
 <p align="center">
   <a href="https://circleci.com/gh/17media/ts-base" alt="Build Status">
     <img src="https://circleci.com/gh/17media/ts-base.svg" />
@@ -12,12 +12,16 @@
 
 ## Infrastructure
 
-Everything you needed for typescript project init. it includes:
+Everything you needed for TypeScript project init. it includes:
 
-* TSLint
-* `tsconfig.json`
-* Prettier with precommit hook integration
-* `ts-node` for debugging in `.vscode/launch.json`
+- `tslint.json` - TSLint configs extends:
+  - tslint-config-airbnb
+  - tslint-config-prettier
+  - tslint-plugin-prettier
+  - tslint-react
+- `tsconfig.json` - TypeScript setting with strict mode
+- `prettier.config.js` - Prettier with precommit hook integration.
+- `.vscode/launch.json` - Added `ts-node` for debugging.
 
 ## Installation
 

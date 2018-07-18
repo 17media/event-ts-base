@@ -57,11 +57,11 @@ module.exports = Object.assign(base, {})
     pkg.scripts = {};
   }
 
-  if (!pkg.husky && !pkg.husky.hook && !pkg.husky.hook.precommit) {
+  if (!pkg.husky && !pkg.husky.hooks && !pkg.husky.hooks['pre-commit']) {
     Object.assign(pkg, {
       husky: {
-        hook: {
-          precommit: packageJSON.husky.hook.precommit,
+        hooks: {
+          'pre-commit': packageJSON.husky.hooks['pre-commit'],
         },
       },
     });

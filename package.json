@@ -28,22 +28,21 @@
     "typescript": "^2.9.2"
   },
   "scripts": {
-    "lint": "tslint `git diff origin/master..HEAD --name-only -- *.js`",
+    "lint": "tslint --project . --exclude package.json",
     "build": "rm -rf out && tsc && cp -r .vscode bin tsconfig.json tslint.json prettier.config.js out/"
   },
   "husky": {
-    "hook": {
-      "precommit": "lint-staged"
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write --parser typescript",
-      "git add"
-    ],
-    "*.{js,jsx,css,md}": [
-      "prettier --write --parser babylon",
+    "*.{ts,tsx,js,jsx,css,md}": [
+      "prettier --write",
       "git add"
     ]
-  }
+  },
+  "repository": "git@github.com:17media/ts-base.git",
+  "author": "Rocky Wu <rocky@17.media>",
+  "license": "MIT"
 }

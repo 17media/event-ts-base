@@ -7,6 +7,16 @@ vars:
     docker:
       - image: circleci/node
 
+  save_out:  &save_out
+    save_cache:
+      key: out#{{ .Revision }}
+      paths:
+        - out
+
+  restore_out:  &restore_out
+    restore_cache:
+      key: out#{{ .Revision }}
+
   save_node_modules:  &save_node_modules
     save_cache:
       key: node_modules#{{ checksum "yarn.lock" }}
@@ -33,7 +43,12 @@ vars:
     setup_remote_docker:
       docker_layer_caching: true
 
-
+  export_GIT_TAG: &export_GIT_TAG
+    run:
+      name: 'export GIT_TAG'
+      command: |
+        echo 'export GIT_TAG=v$(cat package.json | grep version | cut -d '"' -f4)' >> $BASH_ENV
+        source $BASH_ENV
 jobs:
   lint:
     <<: *init
@@ -52,6 +67,8 @@ jobs:
       - run: yarn
       - *save_node_modules
       - run: yarn build
+      - *save_out
+      - run: ls -al out
 
   test:
     <<: *init
@@ -66,29 +83,30 @@ jobs:
     <<: *init
     steps:
       - checkout
+      - *restore_out
+      - *export_GIT_TAG
       - run:
-        name: Deploy to GitHub version branch
-        command: |
-          cd out
-          git init
-          git add .
-          git cm -nm 'v`cat package.json | grep version | cut -d '"' -f4`'
-          git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git  master:v`cat package.json | grep version | cut -d '"' -f4`
-
-      - run: git config --global user.name "CircleCI"
-      - run: git config --global user.email "auto_deploy@circleci.com"
-      - run: git tag v`cat package.json | grep version | cut -d '"' -f4`
-      - run: git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git --tags
+          name: Deploy to GitHub version branch
+          command: |
+            cd out
+            git init
+            git add .
+            git cm -nm $GIT_TAG
+            git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git  master:$GIT_TAG
 
 workflows:
   version: 2
   Testing:
     jobs:
-      - lint
-      - build
+      - lint:
+          <<: *branch_not_deploy
+      - build:
+          <<: *branch_not_deploy
   Deploy:
     jobs:
-      - build
+      - build:
+          <<: *branch_is_deploy
       - deploy:
+          <<: *branch_is_deploy
           requires:
             - build

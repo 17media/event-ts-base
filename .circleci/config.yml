@@ -1,0 +1,94 @@
+version: 2
+
+vars:
+  init: &init
+    environment:
+        TZ: 'Asia/Taipei'
+    docker:
+      - image: circleci/node
+
+  save_node_modules:  &save_node_modules
+    save_cache:
+      key: node_modules#{{ checksum "yarn.lock" }}
+      paths:
+        - node_modules
+
+  restore_node_modules:  &restore_node_modules
+    restore_cache:
+      key: node_modules#{{ checksum "yarn.lock" }}
+
+  branch_not_deploy: &branch_not_deploy
+    filters:
+      branches:
+        ignore:
+          - master
+
+  branch_is_deploy: &branch_is_deploy
+    filters:
+      branches:
+        only:
+          - master
+
+  setup_docker: &setup_docker
+    setup_remote_docker:
+      docker_layer_caching: true
+
+
+jobs:
+  lint:
+    <<: *init
+    steps:
+      - checkout
+      - *restore_node_modules
+      - run: yarn
+      - *save_node_modules
+      - run: yarn lint
+
+  build:
+    <<: *init
+    steps:
+      - checkout
+      - *restore_node_modules
+      - run: yarn
+      - *save_node_modules
+      - run: yarn build
+
+  test:
+    <<: *init
+    steps:
+      - checkout
+      - *restore_node_modules
+      - run: yarn
+      - *save_node_modules
+      - run: yarn test
+
+  deploy:
+    <<: *init
+    steps:
+      - checkout
+      - run:
+        name: Deploy to GitHub version branch
+        command: |
+          cd out
+          git init
+          git add .
+          git cm -nm 'v`cat package.json | grep version | cut -d '"' -f4`'
+          git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git  master:v`cat package.json | grep version | cut -d '"' -f4`
+
+      - run: git config --global user.name "CircleCI"
+      - run: git config --global user.email "auto_deploy@circleci.com"
+      - run: git tag v`cat package.json | grep version | cut -d '"' -f4`
+      - run: git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git --tags
+
+workflows:
+  version: 2
+  Testing:
+    jobs:
+      - lint
+      - build
+  Deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build

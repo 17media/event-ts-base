@@ -47,7 +47,7 @@ vars:
     run:
       name: export GIT_TAG
       command: |
-        echo 'export GIT_TAG=v$(cat package.json | grep version | cut -d '\"' -f4)' >> $BASH_ENV
+        echo 'export GIT_TAG=v$(cat package.json | grep version | cut -d '\''"'\'' -f4)' >> $BASH_ENV
         source $BASH_ENV
 jobs:
   lint:

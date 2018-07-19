@@ -43,12 +43,25 @@ vars:
     setup_remote_docker:
       docker_layer_caching: true
 
-  export_GIT_TAG: &export_GIT_TAG
+  setup_git: &setup_git
     run:
-      name: export GIT_TAG
+      name: Setup Git
       command: |
+        git config --global user.name "CircleCI"
+        git config --global user.email "auto_deploy@circleci.com"
+
+  export_env: &export_env
+    run:
+      name: Export Env
+      command: |
+        echo 'export IMAGE=$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$CIRCLE_SHA1' >> $BASH_ENV
         echo 'export GIT_TAG=v$(cat package.json | grep version | cut -d '\''"'\'' -f4)' >> $BASH_ENV
+
         source $BASH_ENV
+
+        echo $IMAGE
+        echo $GIT_TAG
+
 jobs:
   lint:
     <<: *init
@@ -84,7 +97,8 @@ jobs:
     steps:
       - checkout
       - *restore_out
-      - *export_GIT_TAG
+      - *export_env
+      - *setup_git
       - run:
           name: Deploy to GitHub version branch
           command: |

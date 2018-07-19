@@ -57,7 +57,7 @@ module.exports = Object.assign(base, {})
     pkg.scripts = {};
   }
 
-  if (!pkg.husky && !pkg.husky.hooks && !pkg.husky.hooks['pre-commit']) {
+  if (!pkg.husky || !pkg.husky.hooks || !pkg.husky.hooks['pre-commit']) {
     Object.assign(pkg, {
       husky: {
         hooks: {

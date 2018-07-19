@@ -91,7 +91,7 @@ jobs:
             cd out
             git init
             git add .
-            git cm -nm $GIT_TAG
+            git commit -nm $GIT_TAG
             git push https://$GH_TOKEN@github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git  master:$GIT_TAG
 
 workflows:

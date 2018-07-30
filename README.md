@@ -2,11 +2,11 @@
   TS Base | TypeScript Infrastructure
 </h1>
 <p align="center">
-  <a href="https://circleci.com/gh/17media/ts-base" alt="Build Status">
-    <img src="https://circleci.com/gh/17media/ts-base.svg" />
+  <a href="https://circleci.com/gh/17media/event-ts-base" alt="Build Status">
+    <img src="https://circleci.com/gh/17media/event-ts-base.svg" />
   </a>
-  <a href="https://codecov.io/gh/17media/ts-base" alt="Coverage">
-    <img src="https://img.shields.io/codecov/c/github/17media/ts-base/BRANCH.svg?style=flat-square&" />
+  <a href="https://codecov.io/gh/17media/event-ts-base" alt="Coverage">
+    <img src="https://img.shields.io/codecov/c/github/17media/event-ts-base/master.svg?style=flat-square&" />
   </a>
 </p>
 
@@ -26,11 +26,11 @@ Everything you needed for TypeScript project init. it includes:
 ## Installation
 
 ```sh
-yarn add --dev https://github.com/17media/ts-base.git#latest
+yarn add --dev https://github.com/17media/event-ts-base.git#latest
 ```
 
 ## Initialization
 
 ```sh
-yarn ts-base-init
+yarn event-ts-base-init
 ```

@@ -26,7 +26,7 @@ Everything you needed for TypeScript project init. it includes:
 ## Installation
 
 ```sh
-yarn add --dev https://github.com/17media/event-ts-base.git#latest
+yarn add --dev https://github.com/17media/event-ts-base.git\#latest
 ```
 
 ## Initialization

@@ -34,3 +34,7 @@ yarn add --dev https://github.com/17media/event-ts-base.git#latest
 ```sh
 yarn event-ts-base-init
 ```
+
+## Version Convention
+
+`event-ts-base`'s major version base on TypeScript's version and suffix `YY.M.D`. So it looks like `3.0.1-18.8.8`.

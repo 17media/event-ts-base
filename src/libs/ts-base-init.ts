@@ -67,14 +67,17 @@ module.exports = Object.assign(base, {})
   }
 
   if (!pkg.jest) {
-    Object.assign(pkg.jest, packageJSON.jest);
+    Object.assign(pkg, {
+      jest: packageJSON.jest,
+    });
   }
 
   if (!pkg['lint-staged']) {
-    pkg['lint-staged'] = {};
+    Object.assign(pkg, {
+      'lint-staged': packageJSON['lint-staged'],
+    });
   }
 
-  Object.assign(pkg['lint-staged'], packageJSON['lint-staged']);
   write(stringify(pkg)).to('package.json');
 
   /**

@@ -40,13 +40,12 @@ module.exports = Object.assign(base, {})
   /**
    * =tsconfig.json
    */
-  write(await readFile(`node_modules/${packageJSON.name}/tsconfig.json`)).to(
-    'tsconfig.base.json',
-  );
   if (tsconfigs.length) {
     console.log(`${c.cyan('tsconfig.json')} is already exist.`);
   } else {
-    write(stringify({ extends: `./tsconfig.base` })).to('tsconfig.json');
+    write(await readFile(`node_modules/${packageJSON.name}/tsconfig.json`)).to(
+      'tsconfig.json',
+    );
   }
 
   /**
@@ -65,6 +64,10 @@ module.exports = Object.assign(base, {})
         },
       },
     });
+  }
+
+  if (!pkg.jest) {
+    Object.assign(pkg.jest, packageJSON.jest);
   }
 
   if (!pkg['lint-staged']) {

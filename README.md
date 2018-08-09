@@ -2,11 +2,14 @@
   TS Base | TypeScript Infrastructure
 </h1>
 <p align="center">
+  <a href="https://github.com/17media/event-ts-base/releases">
+    <img src="https://flat.badgen.net/github/release/17media/event-ts-base" />
+  </a>
   <a href="https://circleci.com/gh/17media/event-ts-base" alt="Build Status">
-    <img src="https://circleci.com/gh/17media/event-ts-base.svg" />
+    <img src="https://flat.badgen.net/circleci/github/17media/event-ts-base/master" />
   </a>
   <a href="https://codecov.io/gh/17media/event-ts-base" alt="Coverage">
-    <img src="https://img.shields.io/codecov/c/github/17media/event-ts-base/master.svg?style=flat-square&" />
+    <img src="https://flat.badgen.net/codecov/c/github/17media/event-ts-base" />
   </a>
 </p>
 

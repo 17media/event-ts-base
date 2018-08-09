@@ -25,6 +25,7 @@ Everything you needed for TypeScript project init. it includes:
 - `tsconfig.json` - TypeScript setting with strict mode
 - `prettier.config.js` - Prettier with precommit hook integration.
 - `.vscode/launch.json` - Added `ts-node` for debugging.
+- `jest` / `ts-jest` for unit testing.
 
 ## Installation
 

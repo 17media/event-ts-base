@@ -66,6 +66,10 @@ module.exports = Object.assign(base, {})
     });
   }
 
+  if (!pkg.jest) {
+    Object.assign(pkg.jest, packageJSON.jest);
+  }
+
   if (!pkg['lint-staged']) {
     pkg['lint-staged'] = {};
   }

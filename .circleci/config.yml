@@ -115,6 +115,8 @@ workflows:
   version: 2
   Testing:
     jobs:
+      - test:
+          <<: *branch_not_deploy
       - lint:
           <<: *branch_not_deploy
       - build:

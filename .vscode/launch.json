@@ -7,8 +7,10 @@
       "request": "launch",
       "name": "ts",
       "args": [
-        "--require",
+        "-r",
         "ts-node/register",
+        "-r",
+        "tsconfig-paths/register",
         "${relativeFile}",
       ]
     },

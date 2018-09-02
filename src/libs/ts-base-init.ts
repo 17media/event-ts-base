@@ -22,7 +22,10 @@ Promise.all([
   } else {
     write(`const base = require('${packageJSON.name}/prettier.config')
 
-module.exports = Object.assign(base, {})
+module.exports = {
+  ...base,
+  {},
+}
 `).to('prettier.config.js');
   }
 
